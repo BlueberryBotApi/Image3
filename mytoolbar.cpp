@@ -24,6 +24,7 @@ MyToolBar::MyToolBar(QToolBar *parent)
     quit2 = addAction(QIcon(forClose),"Quit Application");
 
     b=new QSlider(Qt::Horizontal);
+    b->setMinimum(1);
     b->setMaximum(200);
     b->setMaximumWidth(200);
     b->setValue(20);

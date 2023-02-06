@@ -10,10 +10,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     a = new Scene();
     view = new QGraphicsView(a);
+    view->fitInView(a->sceneRect(),Qt::KeepAspectRatio);
     view->setStyleSheet("background:transparent");
     view->setAcceptDrops(true);
     setCentralWidget(view);
     ui->centralwidget->setStyleSheet("background:transparent");
+    setMinimumSize(400,300);
     setAcceptDrops(true);
 
 
@@ -37,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
             connect(myToolBar->eraserTool, &QAction::triggered, a, &Scene::changeTooltoEraser);
             connect(myToolBar->b, &QSlider::valueChanged, a, &Scene::changePenSize);
     a->sizeOfPen=myToolBar->b->value();
+
 }
 
 MainWindow::~MainWindow()
@@ -51,17 +54,21 @@ void MainWindow::GetURLofOpeningFile()
     QString str;
     str=QFileDialog::getOpenFileName(this,"Выберите изображение","C:/Users/Public/Pictures");
     emit urlToScene(str);
-    //ui->statusbar->showMessage(str);
+
 }
 
 void MainWindow::saveFile()
 {
+
     QString str;
-    str=QFileDialog::getSaveFileName(this);
+    str=QFileDialog::getSaveFileName(this,"Выберете путь","",tr("*.png"));
     //QFileDialog::getOpenFileName(this,"Выберите изображение","C:/Users/Public/Pictures");
    // ui->statusbar->showMessage(str);
     emit saveImage(str);
 }
 
-
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+    view->fitInView(a->sceneRect(),Qt::KeepAspectRatio);
+}
 

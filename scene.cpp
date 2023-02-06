@@ -16,8 +16,6 @@ Scene::Scene(QGraphicsScene *parent)
 Scene::~Scene()
 {
     clear();
-   // delete item;
-   // delete upperImg;
 }
 void Scene::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
@@ -51,8 +49,7 @@ void Scene::loadAndSetImageToScene(QString &str)
     }
     update();
     img.load(str);
-    img = img.scaled(this->width(),this->height(),Qt::KeepAspectRatio);
-
+    img = img.scaled(this->width(),this->height(),Qt::KeepAspectRatioByExpanding);
     openImageItem=addPixmap(QPixmap::fromImage(img));
      upperImg = new QImage(img.width(),img.height(),QImage::Format_RGBA64);
     //QPixmap upperImg (img.width(),img.height());
@@ -101,12 +98,16 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 }
 void Scene::save(QString &str)
 {
-    converToPNG();
-    removeItem(item);
-    removeItem(openImageItem);
-    openImageItem=addPixmap(QPixmap::fromImage(img));
-    //delete openImageItem;
-    img.save(str);
+    if(!img.isNull())
+    {
+        converToPNG();
+        removeItem(item);
+        removeItem(openImageItem);
+        openImageItem=addPixmap(QPixmap::fromImage(img));
+        upperImg->fill(Qt::transparent);
+        //delete openImageItem;
+        img.save(str);
+    }
 }
 void Scene::changePenSize(int value)
 {

@@ -41,6 +41,7 @@ private:
     void makeMenu();
     void makeToolBar();
     void saveFile();
+    void resizeEvent(QResizeEvent* event);
 signals:
     void urlToScene(QString &str);
     void saveImage(QString &str);

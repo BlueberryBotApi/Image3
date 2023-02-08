@@ -4,10 +4,10 @@
 #include <QSlider>
 class MyToolBar: public QToolBar
 {
-public:
+public: 
     MyToolBar(QToolBar *parent = nullptr);
     QAction *save2, *open2, *penTool, *eraserTool,*quit2,*slider;
-    QSlider *b;
+    QSlider *sliderForChangingPenSize;
     QAction *forSlider;
     ~MyToolBar();
 

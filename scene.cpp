@@ -7,9 +7,8 @@ Scene::Scene(QGraphicsScene *parent)
     background->setAcceptDrops(true);
     setSceneRect(0,0,1920,1080);
     upperImg = new QImage(width(),height(),QImage::Format_RGBA64);
-   //QPixmap upperImg (img.width(),img.height());
-   upperImg->fill(Qt::transparent);
-   item = addPixmap(QPixmap::fromImage(*upperImg));
+    upperImg->fill(Qt::transparent);
+    item = addPixmap(QPixmap::fromImage(*upperImg));
 
    typeOfTool=100;
 }
@@ -47,19 +46,18 @@ void Scene::loadAndSetImageToScene(QString &str)
 
         }
     }
-    update();
     img.load(str);
-    img = img.scaled(this->width(),this->height(),Qt::KeepAspectRatioByExpanding);
+    img = img.scaled(this->width(),this->height(),Qt::KeepAspectRatio);
     openImageItem=addPixmap(QPixmap::fromImage(img));
-     upperImg = new QImage(img.width(),img.height(),QImage::Format_RGBA64);
-    //QPixmap upperImg (img.width(),img.height());
+    delete upperImg;
+    upperImg = new QImage(img.width(),img.height(),QImage::Format_RGBA64);
     upperImg->fill(Qt::transparent);
     item = addPixmap(QPixmap::fromImage(*upperImg));
 }
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    removeItem(item);
+    delete item;
     for(int i=-sizeOfPen;i<sizeOfPen;i++)
     {
         if(event->scenePos().x()+i<upperImg->width()&&event->scenePos().x()+i>0)
@@ -79,7 +77,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    removeItem(item);
+    delete item;
     for(int i=-sizeOfPen;i<sizeOfPen;i++)
     {
         if(event->scenePos().x()+i<upperImg->width()&&event->scenePos().x()+i>0)

@@ -36,7 +36,7 @@ private:
     //QAction *open,*close,*save,*pen, *eraser;
     QGraphicsView *view;
     Ui::MainWindow *ui;
-    Scene *a;
+    Scene *myScene;
     void GetURLofOpeningFile();
     void makeMenu();
     void makeToolBar();

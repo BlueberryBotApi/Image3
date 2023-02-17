@@ -1,7 +1,7 @@
 #include "mytoolbar.h"
 
-MyToolBar::MyToolBar(QToolBar *parent)
-    :QToolBar(parent)
+MyToolBar::MyToolBar(QMainWindow *parent)
+    :QToolBar()
 {
     QPixmap forSave(":/icons/save.png");
     QPixmap forOpen(":/icons/open.png");
@@ -23,17 +23,29 @@ MyToolBar::MyToolBar(QToolBar *parent)
 
     quit2 = addAction(QIcon(forClose),"Quit Application");
 
-    b=new QSlider(Qt::Horizontal);
-    b->setMinimum(1);
-    b->setMaximum(200);
-    b->setMaximumWidth(200);
-    b->setValue(20);
-    addWidget(b);
+    sliderForChangingPenSize=new QSlider(Qt::Horizontal);
+    sliderForChangingPenSize->setMinimum(1);
+    sliderForChangingPenSize->setMaximum(200);
+    sliderForChangingPenSize->setMaximumWidth(200);
+    sliderForChangingPenSize->setValue(20);
+    addWidget(sliderForChangingPenSize);
 
-    //connect(quit2, &QAction::triggered, qApp, &QApplication::quit);
+}
+
+const QAction *MyToolBar::getSaveAction()
+{
+    return save2;
 }
 MyToolBar::~MyToolBar()
 {
-//   delete b;
-//   delete forSlider;
+
 }
+//const QAction * MyToolBar::getSaveAction()
+//{
+//    return save2;
+//}
+
+//const QAction* MyToolBar::getOpenAction()
+//{
+//    return open2;
+//}

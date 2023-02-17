@@ -1,12 +1,12 @@
 #ifndef MYMENU_H
 #define MYMENU_H
-
+#include <QMainWindow>
 #include <QMenuBar>
 class MyMenu : public QMenuBar
 {
 
 public:
-    MyMenu(QMenuBar *parent = nullptr);
+    MyMenu(QMainWindow *parent = nullptr);
     QAction *open,*close,*save,*pen,*eraser;
 
 };

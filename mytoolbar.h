@@ -3,13 +3,15 @@
 #include <QToolBar>
 #include <QSlider>
 class MyToolBar: public QToolBar
-{
+{   
 public: 
-    MyToolBar(QToolBar *parent = nullptr);
-    QAction *save2, *open2, *penTool, *eraserTool,*quit2,*slider;
+    MyToolBar(QMainWindow *parent = nullptr);
+   const QAction *getSaveAction() ;
+    ~MyToolBar();
+
+    QAction *save2,*open2, *penTool, *eraserTool,*quit2,*slider;
     QSlider *sliderForChangingPenSize;
     QAction *forSlider;
-    ~MyToolBar();
 
 };
 

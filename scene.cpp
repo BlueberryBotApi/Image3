@@ -9,12 +9,11 @@ Scene::Scene(QGraphicsScene *parent)
     upperImg = new QImage(width(),height(),QImage::Format_RGBA64);
     upperImg->fill(Qt::transparent);
     item = addPixmap(QPixmap::fromImage(*upperImg));
-
-   typeOfTool=100;
+    typeOfTool=100;
 }
 Scene::~Scene()
 {
-    clear();
+            delete item;
 }
 void Scene::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
@@ -42,22 +41,25 @@ void Scene::loadAndSetImageToScene(QString &str)
     {
         if(items().at(i)!=this->background)
         {
-            removeItem(items().at(i));
-
+            delete (items().at(i));
         }
     }
+    update();
     img.load(str);
     img = img.scaled(this->width(),this->height(),Qt::KeepAspectRatio);
     openImageItem=addPixmap(QPixmap::fromImage(img));
     delete upperImg;
-    upperImg = new QImage(img.width(),img.height(),QImage::Format_RGBA64);
-    upperImg->fill(Qt::transparent);
-    item = addPixmap(QPixmap::fromImage(*upperImg));
+    upperImg = new QImage( img.width() , img.height() , QImage::Format_RGBA64);
+    upperImg->fill( Qt::transparent );
+    item = addPixmap( QPixmap::fromImage( *upperImg ));
 }
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    delete item;
+
+        delete item;
+
+
     for(int i=-sizeOfPen;i<sizeOfPen;i++)
     {
         if(event->scenePos().x()+i<upperImg->width()&&event->scenePos().x()+i>0)
@@ -71,7 +73,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
             }
         }
     }
-    item=addPixmap(QPixmap::fromImage(*upperImg));
+    item=addPixmap(QPixmap::fromImage( *upperImg ));
     previousPoint = event->scenePos();
 }
 
@@ -84,14 +86,14 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         {
             for(int j=-sizeOfPen;j<sizeOfPen;j++)
             {
-                if(event->scenePos().y()+j<upperImg->height()&&event->scenePos().y()+j>0)
+                if(event->scenePos().y()+j < upperImg->height() && event->scenePos().y() + j >0 )
                 {
-                upperImg->setPixelColor(event->scenePos().x()+i,event->scenePos().y()+j,QColor(0,255,0,typeOfTool));
+                upperImg->setPixelColor( event->scenePos().x() + i , event->scenePos().y() + j, QColor(0,255,0,typeOfTool) );
                 }
             }
         }
     }
-    item=addPixmap(QPixmap::fromImage(*upperImg));
+    item=addPixmap(QPixmap::fromImage( *upperImg ));
     previousPoint = event->scenePos();
 }
 void Scene::save(QString &str)
@@ -99,8 +101,8 @@ void Scene::save(QString &str)
     if(!img.isNull())
     {
         converToPNG();
-        removeItem(item);
-        removeItem(openImageItem);
+
+        delete openImageItem;
         openImageItem=addPixmap(QPixmap::fromImage(img));
         upperImg->fill(Qt::transparent);
         //delete openImageItem;
@@ -128,12 +130,10 @@ void Scene::converToPNG()
     {
         for(int j=0;j<img.height();j++)
         {
-            if(upperImg->pixelColor(i,j)==Qt::transparent||upperImg->pixelColor(i,j)==QColor(0,255,0,0))
+            if( upperImg->pixelColor( i , j )== Qt::transparent || upperImg->pixelColor(i,j) == QColor(0,255,0,0) )
             {
-                img.setPixelColor(i,j,Qt::transparent);
+                img.setPixelColor( i , j , Qt::transparent );
             }
         }
-
     }
-
 }

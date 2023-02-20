@@ -13,7 +13,7 @@ public:
     QAction *getPen() const;
     QAction *getEraser() const;
 private:
-    QAction *OpenImageFromMenuBar,*quitApp,*saveImageFromMenuBar,*pen,*eraser;
+    QAction *OpenImageAction,*quitApp,*saveImageAction,*pen,*eraser;
 };
 
 #endif // MYMENU_H

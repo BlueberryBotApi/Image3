@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
             connect(ToolBar->getPenTool(), &QAction::triggered, myScene, &Scene::changeTooltoPen);
             connect(ToolBar->getEraserTool(), &QAction::triggered, myScene, &Scene::changeTooltoEraser);
             connect(ToolBar->_sliderForChangingPenSize, &QSlider::valueChanged, myScene, &Scene::setPenSize);
-    myScene->sizeOfPen=ToolBar->_sliderForChangingPenSize->value();
+    //myScene->sizeOfPen=ToolBar->_sliderForChangingPenSize->value();
 
 }
 

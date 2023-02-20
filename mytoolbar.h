@@ -14,7 +14,7 @@ public:
     QSlider *_sliderForChangingPenSize;
     QAction *getSaveImageActionFromToolbar() const;
 private:
-    QAction *_saveImageActionFromToolbar, *_openImageFromToolbar, *_choicePenTool, *_choiceEraserTool, *_quitApp;
+    QAction *_saveImageAction, *_openImageAction, *_choicePenTool, *_choiceEraserTool, *_quitApp;
 
 
 

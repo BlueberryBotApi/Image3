@@ -4,13 +4,13 @@ MyMenu::MyMenu(QMainWindow *parent)
     :QMenuBar(parent)
 {
 //////////////////////////////////////////////////////////Files
-    OpenImageFromMenuBar = new QAction("&Open", this);//load Image of Icons
+    OpenImageAction = new QAction("&Open", this);//load Image of Icons
     quitApp = new QAction("&Quit", this);
-    saveImageFromMenuBar = new QAction("&SaveAs", this);
+    saveImageAction = new QAction("&SaveAs", this);
 
     QMenu *fileMenu =addMenu("&File");//add  menu "File"
-    fileMenu->addAction(OpenImageFromMenuBar);//add actions to menu "File"
-    fileMenu->addAction(saveImageFromMenuBar);
+    fileMenu->addAction(OpenImageAction);//add actions to menu "File"
+    fileMenu->addAction(saveImageAction);
     fileMenu->addSeparator();
     fileMenu->addAction(quitApp);
 //////////////////////////////////////////////////////////Tools
@@ -34,7 +34,7 @@ QAction *MyMenu::getPen() const
 
 QAction *MyMenu::getSaveImageFromMenuBar() const
 {
-    return saveImageFromMenuBar;
+    return saveImageAction;
 }
 
 QAction *MyMenu::getQuitApp() const
@@ -44,5 +44,5 @@ QAction *MyMenu::getQuitApp() const
 
 QAction *MyMenu::getOpenImageFromMenuBar() const
 {
-    return OpenImageFromMenuBar;
+    return OpenImageAction;
 }

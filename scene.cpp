@@ -4,16 +4,16 @@ Scene::Scene(QGraphicsScene *parent)
     :QGraphicsScene(parent)
 {
     _imageEditor = new ImageEditor();
-    addItem(background = new QGraphicsRectItem(0,0,1920,1080));
-    background->setAcceptDrops(true);
+    addItem(_background = new QGraphicsRectItem(0,0,1920,1080));
+    _background->setAcceptDrops(true);
     setSceneRect(0,0,1920,1080);
-    upperImg = QImage(width(),height(),QImage::Format_ARGB32);
-    upperImg.fill(Qt::transparent);
-    item = addPixmap(QPixmap::fromImage(upperImg));
+    _upperImg = QImage(width(),height(),QImage::Format_ARGB32);
+    _upperImg.fill(Qt::transparent);
+    _upperImageItem = addPixmap(QPixmap::fromImage(_upperImg));
 }
 Scene::~Scene()
 {
-    delete item;
+    delete _upperImageItem;
 }
 void Scene::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
@@ -23,8 +23,8 @@ void Scene::dropEvent(QGraphicsSceneDragDropEvent *event)
   {
     QList<QUrl> urlList = mimeData->urls();
     // extract the local paths of the files
-    pathList=urlList.at(0).toLocalFile();
-    loadAndSetImageToScene(pathList);
+    _pathList=urlList.at(0).toLocalFile();
+    loadAndSetImageToScene(_pathList);
   }
 
 }
@@ -37,43 +37,43 @@ void Scene::loadAndSetImageToScene(QString &str)
 {
     for(int i = 0; i<items().count();i++)
     {
-        if(items().at(i)!=this->background)
+        if(items().at(i)!=this->_background)
         {
             delete (items().at(i));
         }
     }
     update();
-    img.load(str);
-    img = img.scaled(this->width(),this->height(),Qt::KeepAspectRatio);
-    img.convertTo(QImage::Format_ARGB32);
-    openImageItem=addPixmap(QPixmap::fromImage(img));
-    upperImg = QImage( img.width() , img.height() , QImage::Format_ARGB32);
-    upperImg.fill( Qt::transparent );
-    item = addPixmap( QPixmap::fromImage(upperImg ));
+    _currentImage.load(str);
+    _currentImage = _currentImage.scaled(this->width(),this->height(),Qt::KeepAspectRatio);
+    _currentImage.convertTo(QImage::Format_ARGB32);
+    _openImageItem=addPixmap(QPixmap::fromImage(_currentImage));
+    _upperImg = QImage( _currentImage.width() , _currentImage.height() , QImage::Format_ARGB32);
+    _upperImg.fill( Qt::transparent );
+    _upperImageItem = addPixmap( QPixmap::fromImage(_upperImg ));
 }
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    delete item;
-    _imageEditor->changePixelColor(event->scenePos().x(),event->scenePos().y(), &upperImg);
-    item=addPixmap(QPixmap::fromImage( upperImg ));
+    delete _upperImageItem;
+    _imageEditor->changePixelColor(event->scenePos().x(),event->scenePos().y(), &_upperImg);
+    _upperImageItem=addPixmap(QPixmap::fromImage( _upperImg ));
 }
 
 void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    delete item;
-    _imageEditor->changePixelColor(event->scenePos().x() , event->scenePos().y() , &upperImg);
-    item=addPixmap(QPixmap::fromImage( upperImg ));
+    delete _upperImageItem;
+    _imageEditor->changePixelColor(event->scenePos().x() , event->scenePos().y() , &_upperImg);
+    _upperImageItem=addPixmap(QPixmap::fromImage( _upperImg ));
 }
 void Scene::save(QString &str)
 {
-    if(!img.isNull())
+    if(!_currentImage.isNull())
     {
         converToPNG();
-        delete openImageItem;
-        openImageItem=addPixmap(QPixmap::fromImage(img));
-        upperImg.fill(Qt::transparent);
-        img.save(str);
+        delete _openImageItem;
+        _openImageItem=addPixmap(QPixmap::fromImage(_currentImage));
+        _upperImg.fill(Qt::transparent);
+        _currentImage.save(str);
     }
 }
 void Scene::setPenSize(int value)
@@ -92,5 +92,5 @@ void Scene::changeTooltoEraser()
 
 void Scene::converToPNG()
 {
-    _imageEditor->convertToPng(&img, &upperImg);
+    _imageEditor->convertToPng(&_currentImage, &_upperImg);
 }

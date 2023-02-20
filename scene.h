@@ -16,9 +16,8 @@ class Scene : public QGraphicsScene
 public:
     Scene(QGraphicsScene *parent = nullptr);
     ~Scene();
-    QImage img;
-    QString pathList;
-    int sizeOfPen;
+    QImage _currentImage;
+    QString _pathList;
     ImageEditor *_imageEditor;
 public slots:
     void loadAndSetImageToScene(QString &str);
@@ -29,17 +28,14 @@ public slots:
     void converToPNG();
 
 private:
-    int typeOfTool;
-    QImage upperImg;
-    QGraphicsRectItem* background;
+    QImage _upperImg;
+    QGraphicsRectItem *_background;
+    QGraphicsPixmapItem *_upperImageItem, *_openImageItem;
     void convertToPng();
-    QPointF previousPoint;
     void mousePressEvent(QGraphicsSceneMouseEvent * event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void dropEvent( QGraphicsSceneDragDropEvent *event ) override;
     void dragEnterEvent( QGraphicsSceneDragDropEvent *event )override;
-    QGraphicsPixmapItem* item;
-    QGraphicsPixmapItem* openImageItem;
 };
 
 #endif // SCENERED_H

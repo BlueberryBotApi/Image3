@@ -7,8 +7,8 @@ MyToolBar::MyToolBar(QMainWindow *parent)
     QPixmap forOpen ( ":/icons/open.png" );
     QPixmap forClose ( ":/icons/close.png" );
 
-    _saveImageActionFromToolbar=addAction ( QIcon( forSave ) , "Save File" );
-    _openImageFromToolbar=addAction ( QIcon( forOpen ) , "New File" );
+    _saveImageAction=addAction ( QIcon( forSave ) , "Save File" );
+    _openImageAction=addAction ( QIcon( forOpen ) , "New File" );
     addSeparator();
 
     QPixmap pen( ":/icons/pen.png" );
@@ -34,7 +34,7 @@ QSlider *MyToolBar::getSliderValue() const
 
 QAction *MyToolBar::getSaveImageActionFromToolbar() const
 {
-    return _saveImageActionFromToolbar;
+    return _saveImageAction;
 }
 
 QAction *MyToolBar::getQuitApp() const
@@ -53,5 +53,5 @@ QAction *MyToolBar::getPenTool() const
 }
 QAction *MyToolBar::getOpenImageFromToolbar() const
 {
-    return _openImageFromToolbar;
+    return _openImageAction;
 }

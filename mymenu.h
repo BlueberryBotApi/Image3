@@ -7,8 +7,13 @@ class MyMenu : public QMenuBar
 
 public:
     MyMenu(QMainWindow *parent = nullptr);
-    QAction *open,*close,*save,*pen,*eraser;
-
+    QAction *getOpenImageFromMenuBar() const;
+    QAction *getQuitApp() const;
+    QAction *getSaveImageFromMenuBar() const;
+    QAction *getPen() const;
+    QAction *getEraser() const;
+private:
+    QAction *OpenImageFromMenuBar,*quitApp,*saveImageFromMenuBar,*pen,*eraser;
 };
 
 #endif // MYMENU_H

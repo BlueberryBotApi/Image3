@@ -18,25 +18,26 @@ MainWindow::MainWindow(QWidget *parent)
     ////////////////////////////////////////////////////////////////////////////////////////add and customize QMenuBar
     MyMenu *h=new MyMenu(this);
     setMenuBar(h);
-            connect(h->close, &QAction::triggered, qApp, QApplication::quit);
-            connect(h->open, &QAction::triggered, this, &MainWindow::GetURLofOpeningFile);
-            connect(h->pen, &QAction::triggered, myScene, &Scene::changeTooltoPen);
-            connect(h->eraser, &QAction::triggered, myScene, &Scene::changeTooltoEraser);
+            connect(h->getQuitApp(), &QAction::triggered, qApp, QApplication::quit);
+            connect(h->getOpenImageFromMenuBar(), &QAction::triggered, this, &MainWindow::GetURLofOpeningFile);
+            connect(h->getPen(), &QAction::triggered, myScene, &Scene::changeTooltoPen);
+            connect(h->getEraser(), &QAction::triggered, myScene, &Scene::changeTooltoEraser);
     /////////////////////////////////////////////////////////////////////////////////////// add and customize QToolBar
     MyToolBar *ToolBar=new MyToolBar(this);
     addToolBar(ToolBar);
-            connect(ToolBar->getSaveAction(), &QAction::triggered, this, &MainWindow::saveFile);
-            connect(ToolBar->open2, &QAction::triggered, this, &MainWindow::GetURLofOpeningFile);
-            connect(ToolBar->quit2, &QAction::triggered, qApp, &QApplication::quit);
-            connect(ToolBar->penTool, &QAction::triggered, myScene, &Scene::changeTooltoPen);
-            connect(ToolBar->eraserTool, &QAction::triggered, myScene, &Scene::changeTooltoEraser);
-            connect(ToolBar->sliderForChangingPenSize, &QSlider::valueChanged, myScene, &Scene::changePenSize);
-    myScene->sizeOfPen=ToolBar->sliderForChangingPenSize->value();
+            connect(ToolBar->getSaveImageActionFromToolbar(), &QAction::triggered, this, &MainWindow::saveFile);
+            connect(ToolBar->getOpenImageFromToolbar(), &QAction::triggered, this, &MainWindow::GetURLofOpeningFile);
+            connect(ToolBar->getQuitApp(), &QAction::triggered, qApp, &QApplication::quit);
+            connect(ToolBar->getPenTool(), &QAction::triggered, myScene, &Scene::changeTooltoPen);
+            connect(ToolBar->getEraserTool(), &QAction::triggered, myScene, &Scene::changeTooltoEraser);
+            connect(ToolBar->_sliderForChangingPenSize, &QSlider::valueChanged, myScene, &Scene::setPenSize);
+    myScene->sizeOfPen=ToolBar->_sliderForChangingPenSize->value();
 
 }
 
 MainWindow::~MainWindow()
 {
+    delete myScene;
     delete ui;
 }
 

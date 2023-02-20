@@ -4,14 +4,19 @@
 #include <QSlider>
 class MyToolBar: public QToolBar
 {   
-public: 
+public:
     MyToolBar(QMainWindow *parent = nullptr);
-   const QAction *getSaveAction() ;
-    ~MyToolBar();
+    QAction *getOpenImageFromToolbar() const;
+    QAction *getPenTool() const;
+    QAction *getEraserTool() const;
+    QAction *getQuitApp() const;
+    QSlider *getSliderValue() const;
+    QSlider *_sliderForChangingPenSize;
+    QAction *getSaveImageActionFromToolbar() const;
+private:
+    QAction *_saveImageActionFromToolbar, *_openImageFromToolbar, *_choicePenTool, *_choiceEraserTool, *_quitApp;
 
-    QAction *save2,*open2, *penTool, *eraserTool,*quit2,*slider;
-    QSlider *sliderForChangingPenSize;
-    QAction *forSlider;
+
 
 };
 

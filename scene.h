@@ -22,11 +22,9 @@ public:
 public slots:
     void loadAndSetImageToScene(QString &str);
     void save(QString &str);
-    void setPenSize(int value);
-    void changeTooltoPen();
-    void changeTooltoEraser();
     void converToPNG();
-
+signals:
+    void convertToPNG(QImage *_currentImage,QImage *_upperImg);
 private:
     QImage _upperImg;
     QGraphicsRectItem *_background;

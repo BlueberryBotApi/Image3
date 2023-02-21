@@ -20,7 +20,7 @@ void ImageEditor::changePixelColor(int x, int y,QImage *image)
         }
     }
 }
-void ImageEditor::changePenSize(int value)
+void ImageEditor::setPenSize(int value)
 {
     _sizeOfPen = value;
 }

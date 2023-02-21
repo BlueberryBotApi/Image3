@@ -10,6 +10,7 @@ Scene::Scene(QGraphicsScene *parent)
     _upperImg = QImage(width(),height(),QImage::Format_ARGB32);
     _upperImg.fill(Qt::transparent);
     _upperImageItem = addPixmap(QPixmap::fromImage(_upperImg));
+    connect(this, &Scene::convertToPNG, _imageEditor, &ImageEditor::convertToPng);
 }
 Scene::~Scene()
 {
@@ -67,7 +68,7 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 }
 void Scene::save(QString &str)
 {
-    if(!_currentImage.isNull())
+    if(!_currentImage.isNull()&&!str.isNull())
     {
         converToPNG();
         delete _openImageItem;
@@ -76,21 +77,8 @@ void Scene::save(QString &str)
         _currentImage.save(str);
     }
 }
-void Scene::setPenSize(int value)
-{
-    _imageEditor->changePenSize(value);
-}
-
-void Scene::changeTooltoPen()
-{
-    _imageEditor->changeTooltoPen();
-}
-void Scene::changeTooltoEraser()
-{
-    _imageEditor->changeTooltoEraser();
-}
 
 void Scene::converToPNG()
 {
-    _imageEditor->convertToPng(&_currentImage, &_upperImg);
+    emit convertToPNG(&_currentImage, &_upperImg);
 }

@@ -34,9 +34,9 @@ public:
 private:
     //QMenu *fileMenu, *toolsMenu;
     //QAction *open,*close,*save,*pen, *eraser;
-    QGraphicsView *view;
+    QGraphicsView *_view;
     Ui::MainWindow *ui;
-    Scene *myScene;
+    Scene *_myScene;
     void GetURLofOpeningFile();
     void makeMenu();
     void makeToolBar();

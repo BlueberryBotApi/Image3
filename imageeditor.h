@@ -2,16 +2,16 @@
 #define IMAGEEDITOR_H
 #include <QGraphicsItem>
 
-class ImageEditor
+class ImageEditor:public QObject
 {
-
+    Q_OBJECT
 private:
-    int _sizeOfPen=20, _typeOfToolColor=100;
+    int _sizeOfPen, _typeOfToolColor=100;
 
 public:
     ImageEditor();
 public slots:
-    void changePenSize(int value);
+    void setPenSize(int value);
     void convertToPng(QImage *image,QImage *imagePattern);
     void changePixelColor(int x, int y,QImage *image);
     void changeTooltoPen();

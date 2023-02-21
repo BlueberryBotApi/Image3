@@ -8,36 +8,36 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    myScene = new Scene();
-    view = new QGraphicsView(myScene);
-    setCentralWidget(view);
+    _myScene = new Scene();
+    _view = new QGraphicsView(_myScene);
+    setCentralWidget(_view);
     setMinimumSize(400,300);
     setAcceptDrops(true);
-    connect(this,&MainWindow::urlToScene,myScene,&Scene::loadAndSetImageToScene);
-    connect(this,&MainWindow::saveImage,myScene,&Scene::save);
+    connect(this,&MainWindow::urlToScene,_myScene,&Scene::loadAndSetImageToScene);
+    connect(this,&MainWindow::saveImage,_myScene,&Scene::save);
     ////////////////////////////////////////////////////////////////////////////////////////add and customize QMenuBar
     MyMenu *h=new MyMenu(this);
     setMenuBar(h);
             connect(h->getQuitApp(), &QAction::triggered, qApp, QApplication::quit);
             connect(h->getOpenImageFromMenuBar(), &QAction::triggered, this, &MainWindow::GetURLofOpeningFile);
-            connect(h->getPen(), &QAction::triggered, myScene, &Scene::changeTooltoPen);
-            connect(h->getEraser(), &QAction::triggered, myScene, &Scene::changeTooltoEraser);
+            connect(h->getPen(), &QAction::triggered, _myScene->_imageEditor, &ImageEditor::changeTooltoPen);
+            connect(h->getEraser(), &QAction::triggered, _myScene->_imageEditor, &ImageEditor::changeTooltoEraser);
     /////////////////////////////////////////////////////////////////////////////////////// add and customize QToolBar
     MyToolBar *ToolBar=new MyToolBar(this);
     addToolBar(ToolBar);
             connect(ToolBar->getSaveImageActionFromToolbar(), &QAction::triggered, this, &MainWindow::saveFile);
             connect(ToolBar->getOpenImageFromToolbar(), &QAction::triggered, this, &MainWindow::GetURLofOpeningFile);
             connect(ToolBar->getQuitApp(), &QAction::triggered, qApp, &QApplication::quit);
-            connect(ToolBar->getPenTool(), &QAction::triggered, myScene, &Scene::changeTooltoPen);
-            connect(ToolBar->getEraserTool(), &QAction::triggered, myScene, &Scene::changeTooltoEraser);
-            connect(ToolBar->_sliderForChangingPenSize, &QSlider::valueChanged, myScene, &Scene::setPenSize);
-    //myScene->sizeOfPen=ToolBar->_sliderForChangingPenSize->value();
+            connect(ToolBar->getPenTool(), &QAction::triggered, _myScene->_imageEditor, &ImageEditor::changeTooltoPen);
+            connect(ToolBar->getEraserTool(), &QAction::triggered, _myScene->_imageEditor, &ImageEditor::changeTooltoEraser);
+            connect(ToolBar->_sliderForChangingPenSize, &QSlider::valueChanged, _myScene->_imageEditor, &ImageEditor::setPenSize);
+    _myScene->_imageEditor->setPenSize(ToolBar->_sliderForChangingPenSize->value());
 
 }
 
 MainWindow::~MainWindow()
 {
-    delete myScene;
+    delete _myScene;
     delete ui;
 }
 
@@ -57,6 +57,6 @@ void MainWindow::saveFile()
 
 void MainWindow::resizeEvent(QResizeEvent* event)
 {
-    view->fitInView(myScene->sceneRect(),Qt::KeepAspectRatio);
+    _view->fitInView(_myScene->sceneRect(),Qt::KeepAspectRatio);
 }
 

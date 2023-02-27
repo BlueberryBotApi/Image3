@@ -50,41 +50,40 @@ void Scene::loadAndSetImageToScene(QString &str)
     }
     update();
     _currentImage.load(str);
-    _currentImage = _currentImage.scaled(this->width(),this->height(),Qt::KeepAspectRatio);
+    _currentImage = _currentImage.scaled( this->width(), this->height(), Qt::KeepAspectRatio );
     _currentImage.convertTo(QImage::Format_ARGB32);
-    _openImageItem=addPixmap(QPixmap::fromImage(_currentImage));
+    _openImageItem=addPixmap(QPixmap::fromImage( _currentImage ));
     _upperImg = QImage( _currentImage.width() , _currentImage.height() , QImage::Format_ARGB32);
     _upperImg.fill( Qt::transparent );
-    _upperImageItem = addPixmap( QPixmap::fromImage(_upperImg ));
+    _upperImageItem = addPixmap( QPixmap::fromImage( _upperImg ));
 }
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     delete _upperImageItem;
-    _imageEditor->changePixelColor(event->scenePos().x(),event->scenePos().y(), &_upperImg);
+    _imageEditor->changePixelColor( event->scenePos().x(), event->scenePos().y(), &_upperImg );
     _upperImageItem=addPixmap(QPixmap::fromImage( _upperImg ));
 }
 
 void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     delete _upperImageItem;
-    _imageEditor->changePixelColor(event->scenePos().x() , event->scenePos().y() , &_upperImg);
+    _imageEditor->changePixelColor( event->scenePos().x() , event->scenePos().y() , &_upperImg );
     _upperImageItem=addPixmap(QPixmap::fromImage( _upperImg ));
 }
-void Scene::save(QString &str)
+void Scene::save( QString &str )
 {
-    if(!_currentImage.isNull()&&!str.isNull())
+    if( !_currentImage.isNull() && !str.isNull() )
     {
         converToPNG();
         delete _openImageItem;
-        _openImageItem=addPixmap(QPixmap::fromImage(_currentImage));
+        _openImageItem=addPixmap(QPixmap::fromImage( _currentImage ));
         _upperImg.fill(Qt::transparent);
         emit saveImageSignal(str, *&_currentImage);
-       // _currentImage.save(str);
     }
 }
 
 void Scene::converToPNG()
 {
-    emit convertToPNG(&_currentImage, &_upperImg);
+    emit convertToPNG( &_currentImage, &_upperImg );
 }

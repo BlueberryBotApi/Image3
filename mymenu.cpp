@@ -14,8 +14,8 @@ MyMenu::MyMenu(QMainWindow *parent)
     fileMenu->addSeparator();
     fileMenu->addAction(quitApp);
 //////////////////////////////////////////////////////////Tools
-    pen = new QAction("&Pen",this);//load Image of Icons
-    eraser = new QAction("&Eraser",this);
+    pen = new QAction("&Pen", this);//load Image of Icons
+    eraser = new QAction("&Eraser", this);
 
     QMenu *toolsMenu =addMenu("&Tools");//add  menu "Tools"
     toolsMenu->addAction(pen);//add actions to menu "Tools"

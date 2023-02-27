@@ -57,6 +57,6 @@ void MainWindow::saveFile()
 
 void MainWindow::resizeEvent(QResizeEvent* event)
 {
-    _view->fitInView(_myScene->sceneRect(),Qt::KeepAspectRatio);
+    _view->fitInView( _myScene->sceneRect(), Qt::KeepAspectRatio );
 }
 

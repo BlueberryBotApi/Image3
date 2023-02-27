@@ -1,9 +1,12 @@
 #include "scene.h"
 
+
 Scene::Scene(QGraphicsScene *parent)
     :QGraphicsScene(parent)
 {
     _imageEditor = new ImageEditor();
+    _fileManager = new FileManager();
+
     addItem(_background = new QGraphicsRectItem(0,0,1920,1080));
     _background->setAcceptDrops(true);
     setSceneRect(0,0,1920,1080);
@@ -11,9 +14,11 @@ Scene::Scene(QGraphicsScene *parent)
     _upperImg.fill(Qt::transparent);
     _upperImageItem = addPixmap(QPixmap::fromImage(_upperImg));
     connect(this, &Scene::convertToPNG, _imageEditor, &ImageEditor::convertToPng);
+    connect(this, &Scene::saveImageSignal, _fileManager, &FileManager::saveImage);
 }
 Scene::~Scene()
 {
+    delete _openImageItem;
     delete _upperImageItem;
 }
 void Scene::dropEvent(QGraphicsSceneDragDropEvent *event)
@@ -74,7 +79,8 @@ void Scene::save(QString &str)
         delete _openImageItem;
         _openImageItem=addPixmap(QPixmap::fromImage(_currentImage));
         _upperImg.fill(Qt::transparent);
-        _currentImage.save(str);
+        emit saveImageSignal(str, *&_currentImage);
+       // _currentImage.save(str);
     }
 }
 

@@ -18,14 +18,21 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+
         scene.h
         scene.cpp
+
         mymenu.h
         mymenu.cpp
+
         mytoolbar.h
         mytoolbar.cpp
+
         imageeditor.h
         imageeditor.cpp
+
+        filemanager.h
+        filemanager.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
